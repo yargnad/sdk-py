@@ -50,6 +50,20 @@ async def main():
             if msg.sensors.temperature > 30:
                 await client.set_param("effects", "reverb_decay", 6.0)
 
+### Elemental Control API
+The SDK exposes a small elemental bus API for high-level expressive controls; each element is a float in [-1.0, 1.0] (or [0.0, 1.0] depending on engine):
+
+```python
+# Set element values
+await client.set_element('earth', 0.65)
+await client.set_element('air', 0.12)
+
+# Or set the entire bus in one frame
+await client.set_elemental_bus({'earth': 0.65, 'air': 0.12, 'water': 0.0, 'fire': -0.3})
+```
+
+Elemental control frames are recorded into ER Files (if enabled) and appear in telemetry under `msg.elements`.
+
 asyncio.run(main())
 ```
 
